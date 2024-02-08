@@ -1,0 +1,6 @@
+- [ ] investigate weird reactive conversions for `data`
+- [ ] clean up repo
+- [ ] setup monorepo
+- [ ] handle build / right package.json nightmare
+- [ ] publish
+- [ ] share 

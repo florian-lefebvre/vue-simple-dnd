@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick, onMounted, ref, watch } from "vue";
+import { nextTick, onMounted, ref, toRaw, watch } from "vue";
 import { useDraggable, useElementBounding } from "@vueuse/core";
 import { useDragContext } from "./context";
 
@@ -10,8 +10,7 @@ const props = defineProps<{
 const el = ref<HTMLElement | null>(null);
 const bounding = useElementBounding(el);
 const { isDragging, style, position } = useDraggable(el);
-
-const context = useDragContext();
+const { machine } = useDragContext();
 
 onMounted(() => {
   position.value = { x: bounding.x.value, y: bounding.y.value };
@@ -19,7 +18,7 @@ onMounted(() => {
 
 watch(isDragging, (value) => {
   if (value) {
-    context.machine.send({
+    machine.send({
       type: "startDragging",
       draggable: {
         dimensions: [
@@ -28,11 +27,11 @@ watch(isDragging, (value) => {
           bounding.right.value,
           bounding.bottom.value,
         ] as const,
-        data: props.data,
+        data: toRaw(props.data),
       },
     });
   } else {
-    context.machine.send({ type: "stopDragging" });
+    machine.send({ type: "stopDragging" });
     nextTick(() => {
       position.value = { x: bounding.x.value, y: bounding.y.value };
     });
@@ -40,7 +39,7 @@ watch(isDragging, (value) => {
 });
 
 watch([bounding.x, bounding.y], () => {
-  context.machine.send({
+  machine.send({
     type: "updateDraggable",
     draggable: {
       dimensions: [
@@ -49,7 +48,7 @@ watch([bounding.x, bounding.y], () => {
         bounding.right.value,
         bounding.bottom.value,
       ] as const,
-      data: props.data,
+      data: toRaw(props.data),
     },
   });
 });

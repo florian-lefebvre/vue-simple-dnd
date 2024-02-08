@@ -40,9 +40,7 @@ const getZone = (zone: Item["zone"]) =>
         >
           <div
             class="h-32 w-32 bg-gray-800 transition-opacity"
-            :class="[
-              hovered ? 'opacity-50' : '',
-            ]"
+            :class="[hovered ? 'opacity-50' : '']"
           >
             <Draggable
               v-for="item in getZone(1)"

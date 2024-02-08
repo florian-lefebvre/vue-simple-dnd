@@ -10,16 +10,14 @@ const emit = defineEmits<{
 
 const el = ref<HTMLElement | null>(null);
 const bounding = useElementBounding(el);
-const context = useDragContext();
+const { machine, bus } = useDragContext();
 const id = useId();
 
-const isDragging = computed(() =>
-  context.machine.snapshot.value.matches("dragging")
-);
+const isDragging = computed(() => machine.snapshot.value.matches("dragging"));
 const hasOverlap = computed(() => {
   if (!isDragging.value) return false;
   const [left, top, right, bottom] =
-    context.machine.snapshot.value.context.draggable!.dimensions;
+    machine.snapshot.value.context.draggable!.dimensions;
 
   return !(
     bounding.left.value > right ||
@@ -32,12 +30,8 @@ const isHovered = computed(() => isDragging.value && hasOverlap.value);
 
 watch(isHovered, (isHovered) => {
   if (isHovered) {
-    context.machine.send({
-      type: context.machine.snapshot.value.context.droppables.some(
-        (d) => d.id === id
-      )
-        ? "updateDroppable"
-        : "addDroppable",
+    machine.send({
+      type: "updateDroppable",
       droppable: {
         id,
         dimensions: [
@@ -49,11 +43,11 @@ watch(isHovered, (isHovered) => {
       },
     });
   } else {
-    context.machine.send({ type: "removeDroppable", id });
+    machine.send({ type: "removeDroppable", id });
   }
 });
 
-context.bus.on((event, payload) => {
+bus.on((event, payload) => {
   if (event === "drop-id" && payload?.id === id) {
     emit("drop", payload.data);
   }
@@ -62,6 +56,10 @@ context.bus.on((event, payload) => {
 
 <template>
   <div ref="el">
-    <slot v-bind="{ hovered: isHovered }" />
+    <slot
+      v-bind="{
+        hovered: machine.snapshot.value.context.biggestDroppableId === id,
+      }"
+    />
   </div>
 </template>

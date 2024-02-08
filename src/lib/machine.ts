@@ -23,8 +23,7 @@ export const dragMachine = setup({
       | { type: "startDragging"; draggable: Draggable }
       | { type: "updateDraggable"; draggable: Draggable }
       | { type: "updateDroppable"; droppable: Droppable }
-      | { type: "removeDroppable"; id: Droppable["id"] }
-      | { type: "addDroppable"; droppable: Droppable },
+      | { type: "removeDroppable"; id: Droppable["id"] },
     input: {} as Input,
     context: {} as {
       draggable: null | Draggable;
@@ -62,7 +61,8 @@ export const dragMachine = setup({
 
         const index = areas.indexOf(Math.max(...areas));
 
-        draft.biggestDroppableId = draft.droppables[index].id;
+        draft.biggestDroppableId =
+          index === -1 ? null : draft.droppables[index].id;
       })
     ),
   },
@@ -116,17 +116,6 @@ export const dragMachine = setup({
             target: "idle",
           },
         ],
-        addDroppable: {
-          actions: [
-            assign(({ context, event }) =>
-              produce(context, (draft) => {
-                draft.droppables.push(event.droppable);
-              })
-            ),
-            "updateBiggestDroppable",
-          ],
-          target: "dragging",
-        },
         removeDroppable: {
           actions: [
             assign(({ context, event }) =>
@@ -161,7 +150,9 @@ export const dragMachine = setup({
                 const index = draft.droppables.findIndex(
                   (d) => d.id === event.droppable.id
                 );
-                if (index !== -1) {
+                if (index === -1) {
+                  draft.droppables.push(event.droppable);
+                } else {
                   draft.droppables[index] = event.droppable;
                 }
               })
