@@ -37,9 +37,9 @@ const getZone = (zone: Item["zone"]) =>
       }"
       >
         <div
-          class="h-32 w-32 bg-gray-800 border-2"
+          class="h-32 w-32 bg-gray-800 transition-opacity"
           :class="[
-            hovered ? 'border-dotted border-red-500' : 'border-transparent',
+            hovered ? 'opacity-50' : '',
           ]"
         >
           <Draggable
@@ -97,7 +97,7 @@ const getZone = (zone: Item["zone"]) =>
       }"
     >
       <div
-        class="flex gap-2 items-center mt-4 w-full bg-gray-800 min-h-32 p-2 border-2"
+        class="flex gap-2 items-center mt-4 w-full bg-gray-800 h-32 border-2"
         :class="[
           hovered ? 'border-dotted border-red-500' : 'border-transparent',
         ]"
