@@ -61,8 +61,7 @@ const getZone = (zone: Item["zone"]) =>
       </Droppable>
       <Droppable
         v-slot="{ hovered }"
-        :max-items="1"
-        :items-count="getZone(2).length"
+        :disabled="getZone(2).length >= 1"
         @drop="(item: Item) => {
         items.find(e => e.id === item.id)!.zone = 2
       }"

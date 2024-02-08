@@ -6,13 +6,18 @@ const props = withDefaults(
   defineProps<{
     item: T;
     serialize?: (item: T) => string;
+    disabled?: boolean;
   }>(),
-  { serialize: (item: T) => JSON.stringify(item) }
+  {
+    serialize: (item: T) => JSON.stringify(item),
+    disabled: false,
+  }
 );
 
 const dragging = ref(false);
 
 const onDragStart = (e: DragEvent) => {
+  if (props.disabled) return;
   dragging.value = true;
   if (e.dataTransfer) {
     e.dataTransfer.effectAllowed = "move";
@@ -21,6 +26,7 @@ const onDragStart = (e: DragEvent) => {
 };
 
 const onDragEnd = () => {
+  if (props.disabled) return;
   dragging.value = false;
 };
 </script>
@@ -28,7 +34,7 @@ const onDragEnd = () => {
 <template>
   <Primitive
     as-child
-    draggable="true"
+    :draggable="!disabled"
     :data-dragging="dragging"
     @dragstart="onDragStart"
     @dragend="onDragEnd"
