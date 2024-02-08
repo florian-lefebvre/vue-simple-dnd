@@ -5,13 +5,18 @@ type Dimensions = [left: number, top: number, right: number, bottom: number];
 
 type Draggable = {
   dimensions: Dimensions;
+  data: any;
 };
 type Droppable = {
   id: string;
   dimensions: Dimensions;
 };
 
-export const machine = setup({
+type Input = {
+  notify: (payload: { id: Droppable["id"]; data: Draggable["data"] }) => void;
+};
+
+export const dragMachine = setup({
   types: {
     events: {} as
       | { type: "stopDragging" }
@@ -20,15 +25,12 @@ export const machine = setup({
       | { type: "updateDroppable"; droppable: Droppable }
       | { type: "removeDroppable"; id: Droppable["id"] }
       | { type: "addDroppable"; droppable: Droppable },
-    input: {} as {
-      notify: (id: Droppable["id"] | null) => void;
-    },
+    input: {} as Input,
     context: {} as {
       draggable: null | Draggable;
       droppables: Array<Droppable>;
       biggestDroppableId: null | string;
-      notify: (id: Droppable["id"] | null) => void;
-    },
+    } & Input,
   },
   actions: {
     resetContext: assign({
@@ -98,7 +100,12 @@ export const machine = setup({
             guard: not("areDroppablesEmpty"),
             actions: [
               ({ context }) => {
-                context.notify(context.biggestDroppableId);
+                if (context.biggestDroppableId) {
+                  context.notify({
+                    id: context.biggestDroppableId,
+                    data: context.draggable!.data,
+                  });
+                }
               },
               "resetContext",
             ],
