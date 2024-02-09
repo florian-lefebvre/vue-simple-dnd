@@ -1,5 +1,6 @@
 - [x] investigate weird reactive conversions for `data`
-- [ ] better handle fallback while dragging (element copy)
+- [x] better handle fallback while dragging (element copy)
+- [ ] disabling a dropzone
 - [ ] clean up repo
 - [ ] setup monorepo
 - [ ] handle build / right package.json nightmare

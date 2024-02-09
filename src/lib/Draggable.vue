@@ -5,6 +5,7 @@ import { useDragContext } from "./context";
 
 const props = defineProps<{
   data: any;
+  fallbackClass?: string;
 }>();
 
 const el = ref<HTMLElement | null>(null);
@@ -57,19 +58,18 @@ watch([bounding.x, bounding.y], () => {
 <template>
   <div
     ref="el"
-    class="temp"
+    class="simple-draggable-draggable"
     :style="isDragging ? `position:fixed;z-index:9999;${style}` : undefined"
   >
     <slot v-bind="{ dragging: isDragging }" />
   </div>
-  <div
-    v-if="isDragging"
-    :style="`width:${bounding.width.value}px;height:${bounding.height.value}px`"
-  ></div>
+  <div v-if="isDragging" :class="['simple-draggable-draggable', fallbackClass]">
+    <slot v-bind="{ dragging: isDragging }" />
+  </div>
 </template>
 
 <style>
-.temp * {
+.simple-draggable-draggable * {
   user-select: none;
 }
 </style>

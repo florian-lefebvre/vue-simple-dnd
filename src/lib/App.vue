@@ -97,6 +97,7 @@ const onDrop = (zone: Item["zone"], item: Item) => {
             :key="item.id"
             :data="item"
             v-slot="{ dragging }"
+            fallback-class="opacity-50"
           >
             <div
               class="h-32 w-32"
