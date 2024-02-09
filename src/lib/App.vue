@@ -25,6 +25,12 @@ const items = ref<Array<Item>>([
 
 const getZone = (zone: Item["zone"]) =>
   items.value.filter((item) => item.zone === zone);
+
+const onDrop = (zone: Item["zone"], item: Item) => {
+  const index = items.value.findIndex((e) => e.id === item.id);
+  items.value.splice(index, 1);
+  items.value.push({ ...item, zone });
+};
 </script>
 
 <template>
@@ -32,12 +38,7 @@ const getZone = (zone: Item["zone"]) =>
     <div>
       <h1 class="text-xl">Vue Simple Draggable</h1>
       <div class="flex gap-2 items-center">
-        <Droppable
-          v-slot="{ hovered }"
-          @drop="(item: Item) => {
-          items.find(e => e.id === item.id)!.zone = 1
-        }"
-        >
+        <Droppable v-slot="{ hovered }" @drop="(e) => onDrop(1, e)">
           <div
             class="h-32 w-32 bg-gray-800 transition-opacity"
             :class="[hovered ? 'opacity-50' : '']"
@@ -59,13 +60,7 @@ const getZone = (zone: Item["zone"]) =>
             </Draggable>
           </div>
         </Droppable>
-        <Droppable
-          v-slot="{ hovered }"
-          :disabled="getZone(2).length >= 1"
-          @drop="(item: Item) => {
-          items.find(e => e.id === item.id)!.zone = 2
-        }"
-        >
+        <Droppable v-slot="{ hovered }" @drop="(e) => onDrop(2, e)">
           <div
             class="h-32 w-32 bg-gray-800 border-2"
             :class="[
@@ -90,12 +85,7 @@ const getZone = (zone: Item["zone"]) =>
           </div>
         </Droppable>
       </div>
-      <Droppable
-        v-slot="{ hovered }"
-        @drop="(item: Item) => {
-          items.find(e => e.id === item.id)!.zone = 3
-        }"
-      >
+      <Droppable v-slot="{ hovered }" @drop="(e) => onDrop(3, e)">
         <div
           class="flex gap-2 items-center mt-4 w-full bg-gray-800 h-32 border-2"
           :class="[
