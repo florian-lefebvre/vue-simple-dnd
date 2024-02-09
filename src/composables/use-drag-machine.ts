@@ -1,5 +1,5 @@
 import { useMachine } from "@xstate/vue";
-import { dragMachine } from "./machine";
+import { dragMachine } from "../lib/machine";
 import { useEventBus } from "@vueuse/core";
 
 export const useDragMachine = () => {

@@ -1,63 +1,101 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { Primitive } from "./Primitive";
+import { type ComputedRef, computed, ref, watch } from "vue";
+import { useDragContext } from "../lib/context";
+import { useElementBounding } from "@vueuse/core";
+import { useId } from "../composables/use-id";
+import type { Dimensions } from "../types";
+import { useBoundingDimensions } from "../composables/use-bounding-dimensions";
 
-const props = withDefaults(
-  defineProps<{
-    parse?: (item: string) => any;
-    disabled?: boolean
-  }>(),
-  {
-    parse: (item: string) => JSON.parse(item),
-    disabled: false
-  }
-);
+const props = withDefaults(defineProps<{ disabled?: boolean }>(), {
+  disabled: false,
+});
 
 const emit = defineEmits<{
-  drop: [item: any];
+  drop: [data: any];
 }>();
 
-const hovered = ref(false);
+const el = ref<HTMLElement | null>(null);
+const bounding = useElementBounding(el);
+const { machine, bus } = useDragContext();
+const id = useId();
 
-const onDragEnter = () => {
-  if (props.disabled) return;
-  hovered.value = true;
-};
-
-const onDragOver = (e: DragEvent) => {
-  if (props.disabled) return;
-  e.preventDefault();
-  if (e.dataTransfer) {
-    e.dataTransfer.dropEffect = "move";
+bus.on((event, payload) => {
+  if (event === "drop-id" && payload?.id === id) {
+    emit("drop", payload.data);
   }
-  return false;
-};
+});
 
-const onDragLeave = () => {
-  if (props.disabled) return;
-  hovered.value = false;
-};
+const dimensions = useBoundingDimensions(bounding);
+const slotProps = useSlotProps({
+  dimensions,
+  snapshot: machine.snapshot,
+  id,
+  onHoverChange(hovered) {
+    if (hovered) {
+      machine.send({
+        type: "updateDroppable",
+        droppable: {
+          id,
+          dimensions: [
+            bounding.left.value,
+            bounding.top.value,
+            bounding.right.value,
+            bounding.bottom.value,
+          ] as const,
+        },
+      });
+    } else {
+      machine.send({ type: "removeDroppable", id });
+    }
+  },
+});
 
-const onDrop = (e: DragEvent) => {
-  if (props.disabled) return;
-  e.stopPropagation();
-  hovered.value = false;
+function useSlotProps({
+  dimensions,
+  snapshot,
+  onHoverChange,
+  id,
+}: {
+  dimensions: ComputedRef<Dimensions>;
+  snapshot: ReturnType<typeof useDragContext>["machine"]["snapshot"];
+  onHoverChange: (hovered: boolean) => void;
+  id: string;
+}) {
+  const isDragging = computed(() => snapshot.value.matches("dragging"));
+  const hasOverlap = computed(() => {
+    if (!isDragging.value) return false;
 
-  if (e.dataTransfer) {
-    const item = props.parse(e.dataTransfer.getData("item"));
-    emit("drop", item);
-  }
-};
+    const x1 = dimensions.value;
+    const x2 = snapshot.value.context.draggable!.dimensions;
+
+    return !(x1[0] > x2[2] || x1[2] < x2[0] || x1[1] > x2[3] || x1[3] < x2[1]);
+  });
+  const isHovered = computed(() => isDragging.value && hasOverlap.value);
+  const isNotAllowed = computed(() =>
+    props.disabled ? isHovered.value : false
+  );
+
+  watch(isHovered, (hovered) => {
+    if (props.disabled) {
+      return;
+    }
+
+    onHoverChange(hovered);
+  });
+
+  const isCurrentDroppableHovered = computed(
+    () => machine.snapshot.value.context.biggestDroppableId === id
+  );
+
+  return computed(() => ({
+    hovered: isCurrentDroppableHovered.value,
+    notAllowed: isNotAllowed.value,
+  }));
+}
 </script>
 
 <template>
-  <Primitive
-    :data-hovered="hovered"
-    @dragenter="onDragEnter"
-    @dragover="onDragOver"
-    @dragleave="onDragLeave"
-    @drop="onDrop"
-  >
-    <slot v-bind="{ hovered }" />
-  </Primitive>
+  <div ref="el">
+    <slot v-bind="slotProps" />
+  </div>
 </template>
