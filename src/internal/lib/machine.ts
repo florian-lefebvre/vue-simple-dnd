@@ -1,6 +1,6 @@
 import { produce } from "immer";
 import { assign, not, setup } from "xstate";
-import { Dimensions } from "../types";
+import type { Dimensions } from "../../types";
 
 type Draggable = {
   dimensions: Dimensions;

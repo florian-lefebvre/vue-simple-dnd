@@ -1,8 +1,13 @@
 - [x] investigate weird reactive conversions for `data`
 - [x] better handle fallback while dragging (element copy)
-- [ ] disabling a dropzone
-- [ ] clean up repo
+- [x] disabling a dropzone
+- [x] clean up repo
+- [ ] check why `disabled` does not work anymore with composable
 - [ ] setup monorepo
 - [ ] handle build / right package.json nightmare
+- [ ] documentation
+  - [ ] starlight docs
+  - [ ] jsdoc
+  - [ ] add sources in files and readme (eg. radix-vue)
 - [ ] publish
 - [ ] share 

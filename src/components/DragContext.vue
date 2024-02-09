@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { createDragContext } from "../lib/context";
-import { useDragMachine } from "../composables/use-drag-machine";
+import { provideDragContext } from "../composables/provide-drag-context";
 
-const data = useDragMachine()
-createDragContext(data);
+provideDragContext();
 </script>
 
 <template>
