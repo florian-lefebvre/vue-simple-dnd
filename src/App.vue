@@ -61,12 +61,12 @@ const onDrop = (zone: Item["zone"], item: Item) => {
           </div>
         </Droppable>
         <Droppable
-          v-slot="{ hovered }"
+          v-slot="{ hovered, notAllowed }"
           :disabled="getZone(2).length >= 1"
           @drop="(e) => onDrop(2, e)"
         >
           <div
-            class="h-32 w-32 bg-gray-800 border-2"
+            class="h-32 w-32 bg-gray-800 border-2 relative"
             :class="[
               hovered ? 'border-dotted border-red-500' : 'border-transparent',
             ]"
@@ -86,6 +86,7 @@ const onDrop = (zone: Item["zone"], item: Item) => {
                 {{ item.name }}
               </div>
             </Draggable>
+            <div v-show="notAllowed" class="absolute inset-0 bg-red-500/50"></div>
           </div>
         </Droppable>
       </div>

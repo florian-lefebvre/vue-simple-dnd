@@ -2,7 +2,7 @@
 - [x] better handle fallback while dragging (element copy)
 - [x] disabling a dropzone
 - [x] clean up repo
-- [ ] check why `disabled` does not work anymore with composable
+- [x] check why `disabled` does not work anymore with composable
 - [ ] setup monorepo
 - [ ] handle build / right package.json nightmare
 - [ ] documentation

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useDroppable } from "../composables/use-droppable";
 
 const props = withDefaults(defineProps<{ disabled?: boolean }>(), {
@@ -13,7 +13,7 @@ const emit = defineEmits<{
 const el = ref<HTMLElement | null>(null);
 const { slotProps } = useDroppable({
   el,
-  disabled: props.disabled,
+  disabled: computed(() => props.disabled),
   onDrop: (data) => emit("drop", data),
 });
 </script>

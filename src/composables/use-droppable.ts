@@ -8,11 +8,11 @@ import { useBoundingDimensions } from "../internal/composables/use-bounding-dime
 export const useDroppable = ({
   el,
   onDrop,
-  disabled = false,
+  disabled = computed(() => false),
 }: {
   el: Ref<HTMLElement | null>;
   onDrop: (data: any) => void;
-  disabled?: boolean;
+  disabled?: ComputedRef<boolean>;
 }) => {
   const bounding = useElementBounding(el);
   const { machine, bus } = useDragContext();
@@ -64,7 +64,7 @@ const useSlotProps = ({
   snapshot: ReturnType<typeof useDragContext>["machine"]["snapshot"];
   onHoverChange: (hovered: boolean) => void;
   id: string;
-  disabled: boolean;
+  disabled: ComputedRef<boolean>;
 }) => {
   const isDragging = computed(() => snapshot.value.matches("dragging"));
   const hasOverlap = computed(() => {
@@ -76,10 +76,10 @@ const useSlotProps = ({
     return !(x1[0] > x2[2] || x1[2] < x2[0] || x1[1] > x2[3] || x1[3] < x2[1]);
   });
   const isHovered = computed(() => isDragging.value && hasOverlap.value);
-  const isNotAllowed = computed(() => (disabled ? isHovered.value : false));
+  const isNotAllowed = computed(() => (disabled.value ? isHovered.value : false));
 
   watch(isHovered, (hovered) => {
-    if (disabled) {
+    if (disabled.value) {
       return;
     }
 
