@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { useDroppable } from "../composables/use-droppable";
+import { useDroppable } from "../composables/use-droppable.js";
 
 const props = withDefaults(defineProps<{ disabled?: boolean }>(), {
   disabled: false,

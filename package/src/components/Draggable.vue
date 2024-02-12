@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { useDraggable } from "../composables/use-draggable";
+import { useDraggable } from "../composables/use-draggable.js";
 
 const props = defineProps<{
   data: any;
@@ -12,16 +12,16 @@ const { dragging, style } = useDraggable({ el, data: props.data });
 </script>
 
 <template>
-  <div ref="el" class="simple-draggable-draggable" :style="style">
+  <div ref="el" class="vue-simple-dnd-draggable" :style="style">
     <slot v-bind="{ dragging }" />
   </div>
-  <div v-if="dragging" :class="['simple-draggable-draggable', fallbackClass]">
+  <div v-if="dragging" :class="['vue-simple-dnd-draggable', fallbackClass]">
     <slot v-bind="{ dragging }" />
   </div>
 </template>
 
 <style>
-.simple-draggable-draggable * {
+.vue-simple-dnd-draggable * {
   user-select: none;
 }
 </style>

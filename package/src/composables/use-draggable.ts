@@ -3,8 +3,8 @@ import {
   useDraggable as _useDraggable,
   useElementBounding,
 } from "@vueuse/core";
-import { useDragContext } from "../internal/lib/context";
-import { useBoundingDimensions } from "../internal/composables/use-bounding-dimensions";
+import { useDragContext } from "../internal/lib/context.js";
+import { useBoundingDimensions } from "../internal/composables/use-bounding-dimensions.js";
 
 export const useDraggable = ({
   el,

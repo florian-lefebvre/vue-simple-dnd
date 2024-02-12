@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import DragContext from "./components/DragContext.vue";
-import Draggable from "./components/Draggable.vue";
-import Droppable from "./components/Droppable.vue";
+import { DragContext, Draggable, Droppable } from "vue-simple-dnd";
 
 type Item = {
   id: number;
@@ -86,7 +84,10 @@ const onDrop = (zone: Item["zone"], item: Item) => {
                 {{ item.name }}
               </div>
             </Draggable>
-            <div v-show="notAllowed" class="absolute inset-0 bg-red-500/50"></div>
+            <div
+              v-show="notAllowed"
+              class="absolute inset-0 bg-red-500/50"
+            ></div>
           </div>
         </Droppable>
       </div>

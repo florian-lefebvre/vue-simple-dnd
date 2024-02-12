@@ -1,5 +1,5 @@
 import { computed } from "vue";
-import type { Dimensions } from "../../types";
+import type { Dimensions } from "../../types.js";
 import type { useElementBounding } from "@vueuse/core";
 
 export const useBoundingDimensions = (
