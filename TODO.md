@@ -3,8 +3,11 @@
 - [x] disabling a dropzone
 - [x] clean up repo
 - [x] check why `disabled` does not work anymore with composable
-- [ ] setup monorepo
-- [ ] handle build / right package.json nightmare
+- [x] setup monorepo
+  - [x] root
+  - [x] playground
+  - [x] package
+- [x] handle build / right package.json nightmare
 - [ ] documentation
   - [ ] starlight docs
   - [ ] jsdoc

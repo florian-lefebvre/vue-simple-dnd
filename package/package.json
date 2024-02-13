@@ -1,8 +1,13 @@
 {
   "name": "vue-simple-dnd",
   "version": "0.0.0",
-  "description": "A simple Drag and Drop package for Vue 3",
-  "type": "module",
+  "description": "A simple Drag and Drop library for Vue 3",
+  "author": {
+    "email": "contact@florian-lefebvre.dev",
+    "name": "Florian Lefebvre",
+    "url": "https://florian-lefebvre.dev"
+  },
+  "license": "MIT",
   "keywords": [
     "vue",
     "dnd",
@@ -17,8 +22,6 @@
   "bugs": {
     "url": "https://github.com/florian-lefebvre/vue-simple-dnd/issues"
   },
-  "author": "Florian Lefebvre",
-  "license": "MIT",
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
@@ -37,6 +40,7 @@
   "files": [
     "dist"
   ],
+  "type": "module",
   "scripts": {
     "dev": "vite build --watch",
     "build": "vue-tsc --noEmit && vite build"
