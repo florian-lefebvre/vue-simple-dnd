@@ -2,61 +2,9 @@
 
 A simple Drag and Drop library for Vue 3.
 
-TODO:
+## Documentation
 
-## Usage
-
-### Prerequisites
-
-- Vue 3
-
-### Installation
-
-Install the integration **automatically** using the Astro CLI:
-
-```bash
-pnpm astro add package-name
-```
-
-```bash
-npx astro add package-name
-```
-
-```bash
-yarn astro add package-name
-```
-
-Or install it **manually**:
-
-1. Install the required dependencies
-
-```bash
-pnpm add package-name
-```
-
-```bash
-npm install package-name
-```
-
-```bash
-yarn add package-name
-```
-
-2. Add the integration to your astro config
-
-```diff
-+import integration from "package-name";
-
-export default defineConfig({
-  integrations: [
-+    integration(),
-  ],
-});
-```
-
-### Configuration
-
-TODO:configuration
+Read the [`vue-simple-dnd` docs](https://vue-simple-dnd.netlify.app/).
 
 ## Contributing
 
@@ -81,8 +29,9 @@ You can now edit files in `package`. Please note that making changes to those fi
 
 ## Licensing
 
-[MIT Licensed](https://github.com/TODO:/blob/main/LICENSE). Made with ❤️ by [TODO:](https://github.com/TODO:).
+[MIT Licensed](https://github.com/florian-lefebvre/vue-simple-dnd/blob/main/LICENSE). Made with ❤️ by [Florian Lefebvre](https://github.com/florian-lefebvre).
 
 ## Acknowledgements
 
-TODO:
+This library was developed while working on [Saturday Quiz Time](https://www.saturdayquiztime.com.au/).
+Huge thanks to William for letting me open-source it ❤️.

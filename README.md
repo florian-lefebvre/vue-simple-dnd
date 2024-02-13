@@ -10,5 +10,5 @@ To see how to get started, check out the [package README](./package/README.md)
 
 ## Acknowledgments
 
-This library was developed while working at [Saturday Quiz Time](https://www.saturdayquiztime.com.au/).
+This library was developed while working on [Saturday Quiz Time](https://www.saturdayquiztime.com.au/).
 Huge thanks to William for letting me open-source it ❤️.

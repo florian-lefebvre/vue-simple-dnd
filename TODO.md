@@ -8,11 +8,11 @@
   - [x] playground
   - [x] package
 - [x] handle build / right package.json nightmare
-- [ ] documentation
+- [x] documentation
   - [x] starlight docs
   - [x] jsdoc
-  - [ ] readme
-  - [ ] add sources in files and readme (eg. radix-vue)
+  - [x] readme
+  - [x] add sources in files (eg. radix-vue)
 - [ ] repo setup
 - [ ] publish
 - [ ] share 
