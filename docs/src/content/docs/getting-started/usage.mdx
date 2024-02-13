@@ -2,4 +2,126 @@
 title: Usage
 ---
 
-TODO:
+## Components
+
+:::note
+Components require importing some css:
+
+```ts
+import "vue-simple-dnd/css";
+```
+
+This stylesheet only contains one class, no huge bloated stuff!
+:::
+
+```vue
+<script setup lang="ts">
+import { ref } from "vue";
+import "vue-simple-dndcss";
+import { DragContext, Draggable, Droppable } from "vue-simple-dnd";
+
+type Item = {
+    id: number;
+    name: string;
+    zone: number;
+};
+
+const items = ref<Array<Item>>([
+    { id: 0, name: "an item", zone: 1 },
+    { id: 1, name: "another item", zone: 1 },
+]);
+
+const getZone = (zone: Item["zone"]) => items.value.filter((item) => item.zone === zone);
+
+const onDrop = (zone: Item["zone"], item: Item) => {
+    const index = items.value.findIndex((e) => e.id === item.id);
+    items.value.splice(index, 1);
+    items.value.push({ ...item, zone });
+};
+</script>
+
+<template>
+    <DragContext>
+        <Droppable v-slot="{ hovered }" @drop="(e) => onDrop(1, e)">
+            <div
+                class="flex gap-2 items-center mt-4 w-full bg-gray-800 h-32 border-2"
+                :class="[
+                    hovered ? 'border-dotted border-red-500' : 'border-transparent',
+                ]"
+            >
+                <Draggable
+                    v-for="item in getZone(1)"
+                    :key="item.id"
+                    :data="item"
+                    v-slot="{ dragging }"
+                    fallback-class="opacity-50"
+                >
+                    <div
+                        class="h-32 w-32"
+                        :class="[
+                            dragging ? 'bg-blue-600' : 'bg-blue-800 hover:bg-blue-700',
+                        ]"
+                    >
+                        {{ item.name }}
+                    </div>
+                </Draggable>
+            </div>
+        </Droppable>
+        <Droppable v-slot="{ hovered }" @drop="(e) => onDrop(2, e)">
+            <div
+                class="flex gap-2 items-center mt-4 w-full bg-gray-800 h-32 border-2"
+                :class="[
+                    hovered ? 'border-dotted border-red-500' : 'border-transparent',
+                ]"
+            >
+                <Draggable
+                    v-for="item in getZone(2)"
+                    :key="item.id"
+                    :data="item"
+                    v-slot="{ dragging }"
+                    fallback-class="opacity-50"
+                >
+                    <div
+                        class="h-32 w-32"
+                        :class="[
+                            dragging ? 'bg-blue-600' : 'bg-blue-800 hover:bg-blue-700',
+                        ]"
+                    >
+                        {{ item.name }}
+                    </div>
+                </Draggable>
+            </div>
+        </Droppable>
+    </DragContext>
+</template>
+```
+
+## Composables
+
+```vue
+<script setup lang="ts">
+import { ref } from "vue";
+import { provideDragContext, useDroppable, useDraggable } from "vue-simple-dnd";
+
+provideDragContext();
+
+const droppableRef = ref<HTMLElement | null>(null);
+const { slotProps } = useDroppable({
+    el: droppableRef,
+    disabled: computed(() => false),
+    onDrop: (data) => {},
+});
+
+const draggableRef = ref<HTMLElement | null>(null);
+const { dragging, style } = useDraggable({
+    el: draggableRef,
+    data: props.data
+});
+</script>
+
+<template>
+    <div ref="droppableRef">
+        <div ref="draggableRef"></div>
+    </div>
+</template>
+```

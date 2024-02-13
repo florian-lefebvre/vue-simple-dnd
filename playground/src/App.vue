@@ -119,4 +119,3 @@ const onDrop = (zone: Item["zone"], item: Item) => {
     </div>
   </DragContext>
 </template>
-./internal/components/DragContext.vue./internal/components/Draggable.vue./internal/components/Droppable.vue

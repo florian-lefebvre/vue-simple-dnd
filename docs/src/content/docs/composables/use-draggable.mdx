@@ -2,4 +2,19 @@
 title: useDraggable
 ---
 
-TODO:
+```vue {3,6-9}
+<script setup lang="ts">
+import { ref } from "vue";
+import { useDraggable } from "vue-simple-dnd";
+
+const el = ref<HTMLElement | null>(null);
+const { dragging, style } = useDraggable({
+    el,
+    data: props.data
+});
+</script>
+
+<template>
+    <div ref="el"></div>
+</template>
+```

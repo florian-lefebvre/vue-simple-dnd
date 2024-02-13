@@ -2,4 +2,19 @@
 title: DragContext
 ---
 
-TODO:
+`vue-simple-dnd` relies on Vue's [provide/inject API](https://vuejs.org/guide/components/provide-inject).
+You need to wrap your app in `DragContext`:
+
+```vue {2,6,8}
+<script setup lang="ts">
+import { DragContext } from "vue-simple-dnd"
+</script>
+
+<template>
+    <DragContext>
+        <slot />
+    </DragContext>
+</template>
+```
+
+Note that this component does not render any HTML.

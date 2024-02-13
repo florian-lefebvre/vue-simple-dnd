@@ -2,4 +2,20 @@
 title: useDroppable
 ---
 
-TODO:
+```vue {3,6-10}
+<script setup lang="ts">
+import { ref } from "vue";
+import { useDroppable } from "vue-simple-dnd";
+
+const el = ref<HTMLElement | null>(null);
+const { slotProps } = useDroppable({
+    el,
+    disabled: computed(() => false),
+    onDrop: (data) => {},
+});
+</script>
+
+<template>
+    <div ref="el"></div>
+</template>
+```

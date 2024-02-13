@@ -2,4 +2,30 @@
 title: Draggable
 ---
 
-TODO:
+`Draggable` can be used to drag components inside a [`Droppable`](/components/droppable/).
+
+```vue {2-3,9-13,22}
+<script setup lang="ts">
+import "vue-simple-dnd/css";
+import { Draggable } from "vue-simple-dnd"
+
+const data = { id: 0, name: "todo" };
+</script>
+
+<template>
+    <Draggable
+        :data="data"
+        v-slot="{ dragging }"
+        fallback-class="opacity-50"
+    >
+        <div
+            class="h-32 w-32"
+            :class="[
+                dragging ? 'bg-blue-600' : 'bg-blue-800 hover:bg-blue-700',
+            ]"
+        >
+            {{ data.name }}
+        </div>
+    </Draggable>
+</template>
+```
