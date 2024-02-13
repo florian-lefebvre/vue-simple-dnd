@@ -11,6 +11,7 @@
 - [ ] documentation
   - [ ] starlight docs
   - [ ] jsdoc
+  - [ ] readme
   - [ ] add sources in files and readme (eg. radix-vue)
 - [ ] publish
 - [ ] share 

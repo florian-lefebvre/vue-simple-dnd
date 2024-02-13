@@ -1,10 +1,11 @@
 {
   "name": "root",
   "private": true,
-  "packageManager": "pnpm@8.15.1",
+  "packageManager": "pnpm@8.15.2",
   "scripts": {
-    "playground:dev": "pnpm --filter playground dev",
+    "docs:dev": "pnpm --filter docs dev",
     "package:dev": "pnpm --filter vue-simple-dnd dev",
+    "playground:dev": "pnpm --filter playground dev",
     "changeset": "changeset",
     "release": "node scripts/release.mjs"
   },
