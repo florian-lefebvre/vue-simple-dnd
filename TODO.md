@@ -9,9 +9,10 @@
   - [x] package
 - [x] handle build / right package.json nightmare
 - [ ] documentation
-  - [ ] starlight docs
-  - [ ] jsdoc
+  - [x] starlight docs
+  - [x] jsdoc
   - [ ] readme
   - [ ] add sources in files and readme (eg. radix-vue)
+- [ ] repo setup
 - [ ] publish
 - [ ] share 

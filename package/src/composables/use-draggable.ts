@@ -10,7 +10,13 @@ export const useDraggable = ({
   el,
   data,
 }: {
+  /**
+   * A reference to the element acting as the draggable.
+   */
   el: Ref<HTMLElement | null>;
+  /**
+   * Pass any data that you want to get back in `useDroppable` `onDrop`.
+   */
   data: any;
 }) => {
   const bounding = useElementBounding(el);

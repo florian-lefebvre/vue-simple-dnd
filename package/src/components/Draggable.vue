@@ -3,7 +3,15 @@ import { ref } from "vue";
 import { useDraggable } from "../composables/use-draggable.js";
 
 const props = defineProps<{
+  /**
+   * Pass any data that you want to get back in `Droppable@drop`.
+   */
   data: any;
+  /**
+   * When dragging, we create a copy of the default slot to make
+   * sure there is no layout shift. Specify this option will add
+   * the class to this fallback element.
+   */
   fallbackClass?: string;
 }>();
 

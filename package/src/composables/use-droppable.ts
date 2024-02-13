@@ -10,8 +10,21 @@ export const useDroppable = ({
   onDrop,
   disabled = computed(() => false),
 }: {
+  /**
+   * A reference to the element acting as the droppable.
+   */
   el: Ref<HTMLElement | null>;
+  /**
+   * When a draggable is dropped on {el}, this function is
+   * called with the `data` passed to the dropped draggable.
+   */
   onDrop: (data: any) => void;
+  /**
+   * When disabled, this composable won't trigger `onDrop`.
+   * However, the slot prop `notAllowed` will be `true`.
+   *
+   * @default `false`
+   */
   disabled?: ComputedRef<boolean>;
 }) => {
   const bounding = useElementBounding(el);
