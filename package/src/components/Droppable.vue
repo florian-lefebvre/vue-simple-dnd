@@ -29,7 +29,7 @@ const emit = defineEmits<{
 
 const el = ref<HTMLElement | null>(null);
 const { slotProps } = useDroppable({
-  el,
+  el: el as any,
   disabled: computed(() => props.disabled),
   onDrop: (data) => emit("drop", data),
 });

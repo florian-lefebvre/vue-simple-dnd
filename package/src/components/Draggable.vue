@@ -16,7 +16,7 @@ const props = defineProps<{
 }>();
 
 const el = ref<HTMLElement | null>(null);
-const { dragging, style } = useDraggable({ el, data: props.data });
+const { dragging, style } = useDraggable({ el: el as any, data: props.data });
 </script>
 
 <template>
