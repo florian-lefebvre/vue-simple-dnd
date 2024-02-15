@@ -1,14 +1,16 @@
 import { type ComputedRef, computed, watch, type Ref } from "vue";
-import { useDragContext } from "../internal/lib/context.js";
+import { useDragContext } from "../internal/lib/drag-context.js";
 import { useElementBounding } from "@vueuse/core";
 import { useId } from "../internal/composables/use-id.js";
-import type { Dimensions } from "../types.js";
+import type { Dimensions, Droppable } from "../types.js";
 import { useBoundingDimensions } from "../internal/composables/use-bounding-dimensions.js";
+import { createDroppableContext } from "../internal/lib/droppable-context.js";
 
 export const useDroppable = ({
   el,
   onDrop,
   disabled = computed(() => false),
+  acceptSelfDraggables = computed(() => true),
 }: {
   /**
    * A reference to the element acting as the droppable.
@@ -26,10 +28,19 @@ export const useDroppable = ({
    * @default `false`
    */
   disabled?: ComputedRef<boolean>;
+  /**
+   * When enabled, dragging a Draggable from this droppable
+   * over itself will trigger `dragging`.
+   * 
+   * @default `true`
+   */
+  acceptSelfDraggables?: ComputedRef<boolean>;
 }) => {
   const bounding = useElementBounding(el);
   const { machine, bus } = useDragContext();
   const id = useId();
+
+  createDroppableContext({ id });
 
   bus.on((event, payload) => {
     if (event === "drop-id" && payload?.id === id) {
@@ -38,24 +49,29 @@ export const useDroppable = ({
   });
 
   const dimensions = useBoundingDimensions(bounding);
+
+  const droppable = computed<Droppable>(() => ({
+    id,
+    dimensions: dimensions.value,
+  }));
+
   const slotProps = useSlotProps({
     dimensions,
     snapshot: machine.snapshot,
     id,
     disabled,
     onHoverChange(hovered) {
+      if (
+        !acceptSelfDraggables.value &&
+        machine.snapshot.value.context.draggable?.droppableId === id
+      ) {
+        return;
+      }
+
       if (hovered) {
         machine.send({
           type: "updateDroppable",
-          droppable: {
-            id,
-            dimensions: [
-              bounding.left.value,
-              bounding.top.value,
-              bounding.right.value,
-              bounding.bottom.value,
-            ] as const,
-          },
+          droppable: droppable.value,
         });
       } else {
         machine.send({ type: "removeDroppable", id });
@@ -89,7 +105,9 @@ const useSlotProps = ({
     return !(x1[0] > x2[2] || x1[2] < x2[0] || x1[1] > x2[3] || x1[3] < x2[1]);
   });
   const isHovered = computed(() => isDragging.value && hasOverlap.value);
-  const isNotAllowed = computed(() => (disabled.value ? isHovered.value : false));
+  const isNotAllowed = computed(() =>
+    disabled.value ? isHovered.value : false
+  );
 
   watch(isHovered, (hovered) => {
     if (disabled.value) {

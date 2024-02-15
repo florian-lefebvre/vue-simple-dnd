@@ -3,8 +3,10 @@ import {
   useDraggable as _useDraggable,
   useElementBounding,
 } from "@vueuse/core";
-import { useDragContext } from "../internal/lib/context.js";
+import { useDragContext } from "../internal/lib/drag-context.js";
 import { useBoundingDimensions } from "../internal/composables/use-bounding-dimensions.js";
+import { useDroppableContext } from "../internal/lib/droppable-context.js";
+import { Draggable } from "../types.js";
 
 export const useDraggable = ({
   el,
@@ -23,6 +25,13 @@ export const useDraggable = ({
   const dimensions = useBoundingDimensions(bounding);
   const { isDragging, style: _style, position } = _useDraggable(el);
   const { machine } = useDragContext();
+  const droppable = useDroppableContext()
+
+  const draggable = computed<Draggable>(() => ({
+    dimensions: dimensions.value,
+    data,
+    droppableId: droppable.id
+  }))
 
   const updateDraggingPosition = () => {
     position.value = { x: bounding.x.value, y: bounding.y.value };
@@ -36,10 +45,7 @@ export const useDraggable = ({
     if (value) {
       machine.send({
         type: "startDragging",
-        draggable: {
-          dimensions: dimensions.value,
-          data,
-        },
+        draggable: draggable.value,
       });
     } else {
       machine.send({ type: "stopDragging" });
@@ -52,10 +58,7 @@ export const useDraggable = ({
   watch([bounding.x, bounding.y], () => {
     machine.send({
       type: "updateDraggable",
-      draggable: {
-        dimensions: dimensions.value,
-        data,
-      },
+      draggable: draggable.value,
     });
   });
 

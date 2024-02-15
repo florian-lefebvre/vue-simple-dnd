@@ -8,13 +8,21 @@ const props = withDefaults(
      * When disabled, this component won't trigger `@drop`.
      * However, the slot prop `notAllowed` will be `true`,
      * allowing you to apply styling.
-     * 
+     *
      * @default `false`
      */
     disabled?: boolean;
+    /**
+     * When enabled, dragging a Draggable from this droppable
+     * over itself will trigger `dragging`.
+     *
+     * @default `true`
+     */
+    acceptSelfDraggables?: boolean;
   }>(),
   {
     disabled: false,
+    acceptSelfDraggables: true,
   }
 );
 
@@ -31,6 +39,7 @@ const el = ref<HTMLElement | null>(null);
 const { slotProps } = useDroppable({
   el: el as any,
   disabled: computed(() => props.disabled),
+  acceptSelfDraggables: computed(() => props.acceptSelfDraggables),
   onDrop: (data) => emit("drop", data),
 });
 </script>

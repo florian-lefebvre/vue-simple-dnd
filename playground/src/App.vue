@@ -91,7 +91,7 @@ const onDrop = (zone: Item["zone"], item: Item) => {
           </div>
         </Droppable>
       </div>
-      <Droppable v-slot="{ hovered }" @drop="(e) => onDrop(3, e)">
+      <Droppable v-slot="{ hovered }" :accept-self-draggables="false" @drop="(e) => onDrop(3, e)">
         <div
           class="flex gap-2 items-center mt-4 w-full bg-gray-800 h-32 border-2"
           :class="[

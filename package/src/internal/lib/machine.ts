@@ -1,15 +1,6 @@
 import { produce } from "immer";
 import { assign, not, setup } from "xstate";
-import type { Dimensions } from "../../types.js";
-
-type Draggable = {
-  dimensions: Dimensions;
-  data: any;
-};
-type Droppable = {
-  id: string;
-  dimensions: Dimensions;
-};
+import type { Draggable, Droppable } from "../../types.js";
 
 type Input = {
   notify: (payload: { id: Droppable["id"]; data: Draggable["data"] }) => void;
