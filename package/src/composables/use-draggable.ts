@@ -63,8 +63,8 @@ export const useDraggable = ({
     dragging: isDragging,
     style: computed(() =>
       isDragging.value
-        ? `position:fixed;z-index:9999;${_style.value};cursor:grabbing`
-        : "cursor:grab"
+        ? `position:fixed;z-index:9999;${_style.value};cursor:grabbing;`
+        : "cursor:grab;"
     ),
   };
 };

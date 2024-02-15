@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useDraggable } from "../composables/use-draggable.js";
+import { useElementBounding } from "@vueuse/core";
 
 const props = defineProps<{
   /**
@@ -17,13 +18,28 @@ const props = defineProps<{
 
 const el = ref<HTMLElement | null>(null);
 const { dragging, style } = useDraggable({ el: el as any, data: props.data });
+
+const fallbackRef = ref<HTMLElement | null>(null);
+const bounding = useElementBounding(fallbackRef as any);
 </script>
 
 <template>
-  <div ref="el" class="vue-simple-dnd-draggable" :style="style">
+  <div
+    ref="el"
+    class="vue-simple-dnd-draggable"
+    :style="
+      dragging
+        ? `${style}width:${bounding.width.value}px;height:${bounding.height.value}px;`
+        : style
+    "
+  >
     <slot v-bind="{ dragging }" />
   </div>
-  <div v-if="dragging" :class="['vue-simple-dnd-draggable', fallbackClass]">
+  <div
+    v-if="dragging"
+    ref="fallbackRef"
+    :class="['vue-simple-dnd-draggable', fallbackClass]"
+  >
     <slot v-bind="{ dragging }" />
   </div>
 </template>

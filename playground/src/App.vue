@@ -116,6 +116,31 @@ const onDrop = (zone: Item["zone"], item: Item) => {
           </Draggable>
         </div>
       </Droppable>
+      <Droppable v-slot="{ hovered }" @drop="(e) => onDrop(4, e)">
+        <div
+          class="grid gap-2 grid-cols-12 mt-4 w-full bg-gray-800 min-h-32 border-2"
+          :class="[
+            hovered ? 'border-dotted border-red-500' : 'border-transparent',
+          ]"
+        >
+          <Draggable
+            v-for="item in getZone(4)"
+            :key="item.id"
+            :data="item"
+            v-slot="{ dragging }"
+            fallback-class="opacity-50"
+          >
+            <div
+              class="w-full aspect-square"
+              :class="[
+                dragging ? 'bg-blue-600' : 'bg-blue-800 hover:bg-blue-700',
+              ]"
+            >
+              {{ item.name }}
+            </div>
+          </Draggable>
+        </div>
+      </Droppable>
     </div>
   </DragContext>
 </template>
