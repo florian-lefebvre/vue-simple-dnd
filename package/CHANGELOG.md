@@ -1,5 +1,11 @@
 # vue-simple-dnd
 
+## 0.1.0
+
+### Minor Changes
+
+- 67aa677: Adds a new `acceptSelfDraggables` option
+
 ## 0.0.3
 
 ### Patch Changes
