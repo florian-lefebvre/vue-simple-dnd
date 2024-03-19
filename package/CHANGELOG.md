@@ -1,5 +1,15 @@
 # vue-simple-dnd
 
+## 0.2.0
+
+### Minor Changes
+
+- dbc7cf0: Makes the window scrolls when the dragged element reaches the screen edge
+
+### Patch Changes
+
+- 54598b3: Fixes usage on mobile
+
 ## 0.1.0
 
 ### Minor Changes
