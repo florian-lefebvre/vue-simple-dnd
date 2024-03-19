@@ -65,9 +65,9 @@ export const useDraggable = ({
   return {
     dragging: isDragging,
     style: computed(() =>
-      `touch-action:none;` + isDragging.value
-        ? `position:fixed;z-index:9999;${_style.value};cursor:grabbing;`
-        : "cursor:grab;"
+      isDragging.value
+        ? `touch-action:none;position:fixed;z-index:9999;${_style.value};cursor:grabbing;`
+        : "touch-action:none;cursor:grab;"
     ),
   };
 };
