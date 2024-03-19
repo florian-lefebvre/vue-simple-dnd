@@ -25,13 +25,13 @@ export const useDraggable = ({
   const dimensions = useBoundingDimensions(bounding);
   const { isDragging, style: _style, position } = _useDraggable(el);
   const { machine } = useDragContext();
-  const droppable = useDroppableContext()
+  const droppable = useDroppableContext();
 
   const draggable = computed<Draggable>(() => ({
     dimensions: dimensions.value,
     data,
-    droppableId: droppable.id
-  }))
+    droppableId: droppable.id,
+  }));
 
   const updateDraggingPosition = () => {
     position.value = { x: bounding.x.value, y: bounding.y.value };
@@ -65,7 +65,7 @@ export const useDraggable = ({
   return {
     dragging: isDragging,
     style: computed(() =>
-      isDragging.value
+      `touch-action:none;` + isDragging.value
         ? `position:fixed;z-index:9999;${_style.value};cursor:grabbing;`
         : "cursor:grab;"
     ),
