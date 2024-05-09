@@ -1,18 +1,18 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 import { ref, watch } from "vue";
 import { useDraggable } from "../composables/use-draggable.js";
 import { useElementBounding } from "@vueuse/core";
 
 const emit = defineEmits<{
-  dragStart: [data: any]
-  dragEnd: [data: any]
-}>()
+  dragStart: [data: T];
+  dragEnd: [data: T];
+}>();
 
 const props = defineProps<{
   /**
    * Pass any data that you want to get back in `Droppable@drop`.
    */
-  data: any;
+  data: T;
   /**
    * When dragging, we create a copy of the default slot to make
    * sure there is no layout shift. Specify this option will add
@@ -29,9 +29,9 @@ const bounding = useElementBounding(fallbackRef as any);
 
 watch(dragging, (newValue, oldValue) => {
   if (newValue && !oldValue) {
-    emit('dragStart', props.data);
+    emit("dragStart", props.data);
   } else if (!newValue && oldValue) {
-    emit('dragEnd', props.data);
+    emit("dragEnd", props.data);
   }
 });
 </script>

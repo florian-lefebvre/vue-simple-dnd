@@ -8,7 +8,7 @@ import { useBoundingDimensions } from "../internal/composables/use-bounding-dime
 import { useDroppableContext } from "../internal/lib/droppable-context.js";
 import { Draggable } from "../types.js";
 
-export const useDraggable = ({
+export const useDraggable = <T>({
   el,
   data,
 }: {
@@ -19,7 +19,7 @@ export const useDraggable = ({
   /**
    * Pass any data that you want to get back in `useDroppable` `onDrop`.
    */
-  data: any;
+  data: T;
 }) => {
   const bounding = useElementBounding(el);
   const dimensions = useBoundingDimensions(bounding);
