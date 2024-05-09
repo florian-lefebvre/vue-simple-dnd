@@ -1,5 +1,11 @@
 # vue-simple-dnd
 
+## 0.3.0
+
+### Minor Changes
+
+- 8ac765f: Adds `dragStart` and `dragEnd` events to the `Draggable` component
+
 ## 0.2.0
 
 ### Minor Changes
