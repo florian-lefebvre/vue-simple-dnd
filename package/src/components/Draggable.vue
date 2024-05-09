@@ -3,7 +3,10 @@ import { ref, watch } from "vue";
 import { useDraggable } from "../composables/use-draggable.js";
 import { useElementBounding } from "@vueuse/core";
 
-const emit = defineEmits(['dragStart', 'dragEnd'])
+const emit = defineEmits<{
+  dragStart: [data: any]
+  dragEnd: [data: any]
+}>()
 
 const props = defineProps<{
   /**
