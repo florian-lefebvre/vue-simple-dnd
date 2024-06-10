@@ -1,5 +1,11 @@
 # vue-simple-dnd
 
+## 0.4.0
+
+### Minor Changes
+
+- 983a84c: Adds a `disabled` prop to `useDraggable` and `<Draggable />`
+
 ## 0.3.0
 
 ### Minor Changes
