@@ -1,4 +1,11 @@
-import { nextTick, onMounted, watch, type Ref, computed } from "vue";
+import {
+  nextTick,
+  onMounted,
+  watch,
+  type Ref,
+  computed,
+  type ComputedRef,
+} from "vue";
 import {
   useDraggable as _useDraggable,
   useElementBounding,
@@ -11,6 +18,7 @@ import { Draggable } from "../types.js";
 export const useDraggable = <T>({
   el,
   data,
+  disabled = computed(() => false),
 }: {
   /**
    * A reference to the element acting as the draggable.
@@ -19,17 +27,29 @@ export const useDraggable = <T>({
   /**
    * Pass any data that you want to get back in `useDroppable` `onDrop`.
    */
-  data: T;
+  data: Ref<T>;
+  /**
+   * When disabled, `dragging` will always be false.
+   *
+   * @default `false`
+   */
+  disabled?: ComputedRef<boolean>;
 }) => {
   const bounding = useElementBounding(el);
   const dimensions = useBoundingDimensions(bounding);
-  const { isDragging, style: _style, position } = _useDraggable(el);
+  const {
+    isDragging: _isDragging,
+    style: _style,
+    position,
+  } = _useDraggable(el);
   const { machine } = useDragContext();
   const droppable = useDroppableContext();
 
+  const isDragging = computed(() => !disabled.value && _isDragging.value);
+
   const draggable = computed<Draggable>(() => ({
     dimensions: dimensions.value,
-    data,
+    data: data.value,
     droppableId: droppable.id,
   }));
 
