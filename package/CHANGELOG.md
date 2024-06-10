@@ -1,5 +1,11 @@
 # vue-simple-dnd
 
+## 0.4.1
+
+### Patch Changes
+
+- 91720b0: Fixes the class when a draggable is disabled
+
 ## 0.4.0
 
 ### Minor Changes
