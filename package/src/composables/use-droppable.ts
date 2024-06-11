@@ -11,6 +11,7 @@ export const useDroppable = ({
   onDrop,
   disabled = computed(() => false),
   acceptSelfDraggables = computed(() => true),
+  overlap = computed(() => 0.001),
 }: {
   /**
    * A reference to the element acting as the droppable.
@@ -31,10 +32,17 @@ export const useDroppable = ({
   /**
    * When enabled, dragging a Draggable from this droppable
    * over itself will trigger `dragging`.
-   * 
+   *
    * @default `true`
    */
   acceptSelfDraggables?: ComputedRef<boolean>;
+  /**
+   * Defines how much overlap between the droppable and the
+   * draggable is required to trigger a hover.
+   *
+   * @default `0.001`
+   */
+  overlap?: ComputedRef<number>;
 }) => {
   const bounding = useElementBounding(el);
   const { machine, bus } = useDragContext();
@@ -60,6 +68,7 @@ export const useDroppable = ({
     snapshot: machine.snapshot,
     id,
     disabled,
+    percentage: overlap,
     onHoverChange(hovered) {
       if (
         !acceptSelfDraggables.value &&
@@ -88,12 +97,14 @@ const useSlotProps = ({
   onHoverChange,
   id,
   disabled,
+  percentage,
 }: {
   dimensions: ComputedRef<Dimensions>;
   snapshot: ReturnType<typeof useDragContext>["machine"]["snapshot"];
   onHoverChange: (hovered: boolean) => void;
   id: string;
   disabled: ComputedRef<boolean>;
+  percentage: ComputedRef<number>;
 }) => {
   const isDragging = computed(() => snapshot.value.matches("dragging"));
   const hasOverlap = computed(() => {
@@ -102,7 +113,19 @@ const useSlotProps = ({
     const x1 = dimensions.value;
     const x2 = snapshot.value.context.draggable!.dimensions;
 
-    return !(x1[0] > x2[2] || x1[2] < x2[0] || x1[1] > x2[3] || x1[3] < x2[1]);
+    const overlapX = Math.max(
+      0,
+      Math.min(x1[2], x2[2]) - Math.max(x1[0], x2[0])
+    );
+    const overlapY = Math.max(
+      0,
+      Math.min(x1[3], x2[3]) - Math.max(x1[1], x2[1])
+    );
+    const overlapArea = overlapX * overlapY;
+
+    const draggableArea = (x2[2] - x2[0]) * (x2[3] - x2[1]);
+
+    return overlapArea >= percentage.value * draggableArea;
   });
   const isHovered = computed(() => isDragging.value && hasOverlap.value);
   const isNotAllowed = computed(() =>

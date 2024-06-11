@@ -19,6 +19,13 @@ const props = withDefaults(
      * @default `true`
      */
     acceptSelfDraggables?: boolean;
+    /**
+     * Defines how much overlap between the Droppable and the
+     * Draggable is required to trigger a hover.
+     *
+     * @default `0.001`
+     */
+    overlap?: number;
   }>(),
   {
     disabled: false,
@@ -41,6 +48,7 @@ const { slotProps } = useDroppable({
   disabled: computed(() => props.disabled),
   acceptSelfDraggables: computed(() => props.acceptSelfDraggables),
   onDrop: (data) => emit("drop", data),
+  overlap: props.overlap ? computed(() => props.overlap) : undefined,
 });
 </script>
 

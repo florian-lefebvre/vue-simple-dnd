@@ -62,6 +62,7 @@ const onDrop = (zone: Item["zone"], item: Item) => {
           v-slot="{ hovered, notAllowed }"
           :disabled="getZone(2).length >= 1"
           @drop="(e) => onDrop(2, e)"
+          :overlap="0.5"
         >
           <div
             class="h-32 w-32 bg-gray-800 border-2 relative"
