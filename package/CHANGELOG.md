@@ -1,5 +1,11 @@
 # vue-simple-dnd
 
+## 0.5.0
+
+### Minor Changes
+
+- bb0c020: Adds an `overlap` prop to droppables
+
 ## 0.4.1
 
 ### Patch Changes
