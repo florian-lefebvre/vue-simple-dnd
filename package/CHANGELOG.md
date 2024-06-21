@@ -1,5 +1,15 @@
 # vue-simple-dnd
 
+## 0.6.0
+
+### Minor Changes
+
+- 81c2cf4: Updates build process from Vite to TSUP
+
+### Patch Changes
+
+- 81c2cf4: Fixes a case where `useDraggable` style position would be incorrect after resizing the window
+
 ## 0.5.0
 
 ### Minor Changes
