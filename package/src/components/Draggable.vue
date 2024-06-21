@@ -71,9 +71,3 @@ watch(dragging, (newValue, oldValue) => {
     <slot v-bind="{ dragging }" />
   </div>
 </template>
-
-<style>
-.vue-simple-dnd-draggable * {
-  user-select: none;
-}
-</style>

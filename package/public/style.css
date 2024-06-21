@@ -1,0 +1,3 @@
+.vue-simple-dnd-draggable * {
+  user-select: none;
+}

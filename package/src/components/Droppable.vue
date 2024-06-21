@@ -48,7 +48,7 @@ const { slotProps } = useDroppable({
   disabled: computed(() => props.disabled),
   acceptSelfDraggables: computed(() => props.acceptSelfDraggables),
   onDrop: (data) => emit("drop", data),
-  overlap: props.overlap ? computed(() => props.overlap) : undefined,
+  overlap: props.overlap ? computed(() => props.overlap!) : undefined,
 });
 </script>
 

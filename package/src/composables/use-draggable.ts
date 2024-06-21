@@ -70,12 +70,14 @@ export const useDraggable = <T>({
     } else {
       machine.send({ type: "stopDragging" });
       nextTick(() => {
+        // TODO: check if needed
         updateDraggingPosition();
       });
     }
   });
 
   watch([bounding.x, bounding.y], () => {
+    updateDraggingPosition();
     machine.send({
       type: "updateDraggable",
       draggable: draggable.value,
