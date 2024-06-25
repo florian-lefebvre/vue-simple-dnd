@@ -1,10 +1,10 @@
-import { type ComputedRef, computed, watch, type Ref } from "vue";
-import { useDragContext } from "../internal/lib/drag-context.js";
-import { useElementBounding } from "@vueuse/core";
-import { useId } from "../internal/composables/use-id.js";
-import type { Dimensions, Droppable } from "../types.js";
+import { computed, watch, type ComputedRef, type Ref } from "vue";
 import { useBoundingDimensions } from "../internal/composables/use-bounding-dimensions.js";
+import { useElementBounding } from "../internal/composables/use-element-bounding.js";
+import { useId } from "../internal/composables/use-id.js";
+import { useDragContext } from "../internal/lib/drag-context.js";
 import { createDroppableContext } from "../internal/lib/droppable-context.js";
+import type { Dimensions, Droppable } from "../types.js";
 
 export const useDroppable = ({
   el,

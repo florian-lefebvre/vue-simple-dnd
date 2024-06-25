@@ -1,19 +1,17 @@
+import { useDraggable as _useDraggable } from "@vueuse/core";
 import {
+  computed,
   nextTick,
   onMounted,
   watch,
-  type Ref,
-  computed,
   type ComputedRef,
+  type Ref,
 } from "vue";
-import {
-  useDraggable as _useDraggable,
-  useElementBounding,
-} from "@vueuse/core";
-import { useDragContext } from "../internal/lib/drag-context.js";
 import { useBoundingDimensions } from "../internal/composables/use-bounding-dimensions.js";
+import { useElementBounding } from "../internal/composables/use-element-bounding.js";
+import { useDragContext } from "../internal/lib/drag-context.js";
 import { useDroppableContext } from "../internal/lib/droppable-context.js";
-import { Draggable } from "../types.js";
+import type { Draggable } from "../types.js";
 
 export const useDraggable = <T>({
   el,
@@ -90,8 +88,8 @@ export const useDraggable = <T>({
       isDragging.value
         ? `touch-action:none;position:fixed;z-index:9999;${_style.value};cursor:grabbing;`
         : disabled.value
-        ? "touch-action:none;"
-        : "touch-action:none;cursor:grab;"
+          ? "touch-action:none;"
+          : "touch-action:none;cursor:grab;"
     ),
   };
 };

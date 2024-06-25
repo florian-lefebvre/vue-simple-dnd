@@ -1,7 +1,7 @@
 import { inject, provide, type InjectionKey } from "vue";
 import { useDragMachine } from "../composables/use-drag-machine.js";
 
-type Context = ReturnType<typeof useDragMachine>
+type Context = ReturnType<typeof useDragMachine>;
 
 const contextKey = Symbol() as InjectionKey<Context>;
 

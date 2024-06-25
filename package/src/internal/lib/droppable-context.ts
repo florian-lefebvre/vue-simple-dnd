@@ -1,9 +1,9 @@
 import { inject, provide, type InjectionKey } from "vue";
-import { Droppable } from "../../types.js";
+import type { Droppable } from "../../types.js";
 
 type Context = {
-  id: Droppable["id"]
-}
+  id: Droppable["id"];
+};
 
 const contextKey = Symbol() as InjectionKey<Context>;
 

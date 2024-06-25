@@ -1,5 +1,5 @@
 import { useEventListener, useWindowSize } from "@vueuse/core";
-import { ComputedRef, computed, onMounted } from "vue";
+import { computed, onMounted, type ComputedRef } from "vue";
 
 // https://www.bennadel.com/blog/3460-automatically-scroll-the-window-when-the-user-approaches-the-viewport-edge-in-javascript.htm
 export const useEdgeScroll = ({

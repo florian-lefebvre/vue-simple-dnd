@@ -1,6 +1,6 @@
+import { useEventBus } from "@vueuse/core";
 import { useMachine } from "@xstate/vue";
 import { dragMachine } from "../lib/machine.js";
-import { useEventBus } from "@vueuse/core";
 
 export const useDragMachine = () => {
   const bus = useEventBus<"drop-id", { id: string; data: any }>(
