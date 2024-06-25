@@ -1,5 +1,11 @@
 # vue-simple-dnd
 
+## 0.6.1
+
+### Patch Changes
+
+- d617d6f: Fixes an incompatibility with transitions
+
 ## 0.6.0
 
 ### Minor Changes
