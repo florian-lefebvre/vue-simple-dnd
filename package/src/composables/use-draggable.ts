@@ -88,8 +88,8 @@ export const useDraggable = <T>({
       isDragging.value
         ? `touch-action:none;position:fixed;z-index:9999;${_style.value};cursor:grabbing;`
         : disabled.value
-          ? "touch-action:none;"
-          : "touch-action:none;cursor:grab;"
+        ? "touch-action:none;"
+        : "touch-action:none;cursor:grab;"
     ),
   };
 };
