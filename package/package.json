@@ -1,6 +1,6 @@
 {
   "name": "vue-simple-dnd",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "A simple Drag and Drop library for Vue 3",
   "author": {
     "email": "contact@florian-lefebvre.dev",
