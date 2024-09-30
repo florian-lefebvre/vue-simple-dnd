@@ -125,7 +125,7 @@ const useSlotProps = ({
 
     const draggableArea = (x2[2] - x2[0]) * (x2[3] - x2[1]);
 
-    return overlapArea >= percentage.value * draggableArea;
+    return overlapArea > 0 && overlapArea >= percentage.value * draggableArea;
   });
   const isHovered = computed(() => isDragging.value && hasOverlap.value);
   const isNotAllowed = computed(() =>
