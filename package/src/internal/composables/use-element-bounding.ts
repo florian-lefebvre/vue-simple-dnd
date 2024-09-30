@@ -2,6 +2,7 @@ import {
   unrefElement,
   useEventListener,
   useMutationObserver,
+  useRafFn,
   useResizeObserver,
   type MaybeComputedElementRef,
 } from "@vueuse/core";
@@ -53,6 +54,10 @@ export function useElementBounding(target: MaybeComputedElementRef) {
   // trigger by css or style
   useMutationObserver(target, update, {
     attributeFilter: ["style", "class"],
+  });
+
+  useRafFn(update, {
+    fpsLimit: 10,
   });
 
   useEventListener("scroll", update, { capture: true, passive: true });
