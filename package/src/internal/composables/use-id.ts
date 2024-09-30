@@ -20,5 +20,5 @@ export function useId(deterministicId?: string) {
   const { count } = useGlobalState();
   if (!deterministicId) count.value++;
 
-  return deterministicId || `simple-draggble-${count.value}`;
+  return deterministicId || `simple-draggable-${count.value}`;
 }
